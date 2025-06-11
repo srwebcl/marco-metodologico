@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografía Interactiva: Análisis de Chequeo de Pozos</title>
+    <title>Póster Interactivo: Progreso de Investigación</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Teko:wght@600&display=swap" rel="stylesheet">
     
-    <!-- Chosen Palette: Energetic & Playful -->
-    <!-- Application Structure Plan: La infografía se estructura como una narrativa visual descendente. Comienza con un gancho que presenta el problema (la ineficiencia del método manual), avanza hacia la solución (el marco metodológico), presenta la evidencia clave (los resultados del análisis de pozos) y concluye con el panorama estratégico (FODA). Esta estructura de "problema-solución-evidencia" es más atractiva y fácil de seguir para el usuario que un simple volcado de las secciones del informe original. -->
-    <!-- Visualization & Content Choices: 1. Problema: Tarjetas de íconos con estadísticas clave para un impacto inmediato (Objetivo: Informar, Método: HTML/CSS con Unicode, Justificación: Comunica los puntos de dolor rápidamente). 2. Metodología: Diagrama de flujo horizontal simple (Objetivo: Organizar, Método: Flexbox de Tailwind, Justificación: Muestra el proceso secuencial de forma clara sin la complejidad de un gráfico formal). 3. Resultados de Pozos: Gráfico de barras de Chart.js (Objetivo: Comparar, Método: Canvas vía Chart.js, Justificación: Es la mejor forma de comparar las proporciones de las diferentes categorías de pozos; se ha añadido interactividad para la exploración). 4. FODA: Rejilla 2x2 (Objetivo: Organizar, Método: Grid de Tailwind, Justificación: Formato estándar y reconocible para el análisis estratégico). -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #F0F4F8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #34495E;
         }
         .title-font {
             font-family: 'Teko', sans-serif;
@@ -26,140 +25,191 @@
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            height: 300px;
+            max-width: 600px; /* Limit width for chart for better legibility */
+            height: 180px; /* Adjusted for single-page view */
             margin: auto;
         }
         @media (min-width: 768px) {
+            body {
+                overflow: hidden; /* Prevent scrolling on desktop */
+            }
             .chart-container {
-                height: 450px;
-                max-height: 50vh;
+                height: 200px; /* Slightly taller on desktop */
+                max-height: 25vh; /* Max height relative to viewport */
+            }
+            main {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around; /* Distribute sections vertically */
+            }
+            section {
+                margin-bottom: 0 !important; /* Remove bottom margins */
+                padding-top: 1vh; /* Reduce top padding */
+                padding-bottom: 1vh; /* Reduce bottom padding */
+            }
+            h2 {
+                font-size: 2.5rem !important; /* Smaller headings on desktop */
+            }
+            p {
+                font-size: 0.8rem; /* Smaller text */
+                margin-bottom: 0.25rem !important; /* Smaller paragraph margins */
+            }
+            .py-4 {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+            .px-4 {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+            .text-3xl {
+                font-size: 2rem; /* Adjusted for tighter space */
+            }
+            .text-xl {
+                font-size: 1rem; /* Adjusted for tighter space */
+            }
+            .text-base {
+                font-size: 0.9rem; /* Adjusted for tighter space */
+            }
+            .text-sm {
+                font-size: 0.75rem; /* Adjusted for tighter space */
+            }
+            .md\:text-2xl {
+                font-size: 1.5rem; /* Adjusted for tighter space */
+            }
+            .md\:text-3xl {
+                font-size: 2rem; /* Adjusted for tighter space */
+            }
+            .md\:text-4xl {
+                font-size: 2.5rem; /* Adjusted for tighter space */
+            }
+            .md\:p-6 {
+                padding: 1rem;
+            }
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
             }
         }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4">
-            <h1 class="title-font text-4xl md:text-5xl text-center text-blue-900 tracking-wider">REVOLUCIONANDO LA MINERÍA: ANÁLISIS DIGITAL DE POZOS</h1>
+    <header class="bg-blue-900 shadow-lg py-1">
+        <div class="container mx-auto px-4">
+            <h1 class="title-font text-2xl md:text-3xl text-center text-white tracking-wider">PÓSTER: PROGRESO DE INVESTIGACIÓN</h1>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
-        <section id="problematica" class="text-center mb-20">
-            <h2 class="title-font text-5xl md:text-6xl mb-4 text-blue-800">EL DESAFÍO DEL MÉTODO TRADICIONAL</h2>
-            <p class="max-w-4xl mx-auto text-lg text-gray-600 mb-12">
-                En faenas como Mina El Pleito, el chequeo manual de pozos presenta limitaciones críticas que generan sobrecostos, retrasos y, lo más importante, riesgos de seguridad. La falta de datos precisos y en tiempo real es el principal cuello de botella para la optimización del proceso de tronadura.
+    <main class="container mx-auto px-4 py-4">
+        <section id="problematica" class="text-center mb-2 md:mb-0">
+            <h2 class="title-font text-3xl md:text-4xl mb-1 text-blue-800">EL DESAFÍO Y LA OPORTUNIDAD</h2>
+            <p class="max-w-4xl mx-auto text-sm text-gray-600 mb-2 md:mb-1">
+                Chequeo manual de pozos: ineficiente y riesgoso. Digitalización es clave para optimizar.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-orange-500">
-                    <div class="text-6xl mb-4">⏱️</div>
-                    <h3 class="text-2xl font-bold mb-2">Tiempos Elevados</h3>
-                    <p class="text-gray-600">Procesos lentos que retrasan toda la cadena productiva.</p>
+            <div class="grid grid-cols-3 gap-1 md:gap-2">
+                <div class="bg-white p-2 rounded-md shadow-sm border-b border-orange-500">
+                    <div class="text-2xl mb-0.5">⏱️</div>
+                    <h3 class="text-xs md:text-sm font-bold">Altos Tiempos</h3>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-red-500">
-                    <div class="text-6xl mb-4">📉</div>
-                    <h3 class="text-2xl font-bold mb-2">Baja Precisión</h3>
-                    <p class="text-gray-600">Datos poco fiables que llevan a desviaciones y tronaduras ineficientes.</p>
+                <div class="bg-white p-2 rounded-md shadow-sm border-b border-red-500">
+                    <div class="text-2xl mb-0.5">📉</div>
+                    <h3 class="text-xs md:text-sm font-bold">Baja Precisión</h3>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-yellow-500">
-                     <div class="text-6xl mb-4">⚠️</div>
-                    <h3 class="text-2xl font-bold mb-2">Alta Exposición al Riesgo</h3>
-                    <p class="text-gray-600">Personal expuesto a condiciones inseguras de forma innecesaria.</p>
+                <div class="bg-white p-2 rounded-md shadow-sm border-b border-yellow-500">
+                     <div class="text-2xl mb-0.5">⚠️</div>
+                    <h3 class="text-xs md:text-sm font-bold">Alto Riesgo</h3>
                 </div>
             </div>
         </section>
 
-        <section id="metodologia" class="bg-white rounded-xl shadow-lg p-12 mb-20">
-            <h2 class="title-font text-5xl md:text-6xl text-center mb-4 text-blue-800">VALIDACIÓN DE LA INNOVACIÓN EN TERRENO</h2>
-            <p class="max-w-4xl mx-auto text-lg text-center text-gray-600 mb-12">
-                Para garantizar la efectividad de la nueva tecnología, se diseñó un riguroso proceso de validación en 4 etapas, combinando mediciones cuantitativas con evaluaciones cualitativas para asegurar no solo la superioridad técnica, sino también su viabilidad y aceptación por parte del personal.
+        <section id="metodologia" class="bg-white rounded-lg shadow-md p-3 md:p-4 mb-2 md:mb-0">
+            <h2 class="title-font text-2xl md:text-3xl text-center mb-1 text-blue-800">PROGRESO DE LA INVESTIGACIÓN: 4 ETAPAS</h2>
+            <p class="max-w-4xl mx-auto text-sm text-center text-gray-600 mb-2 md:mb-1">
+                Haz clic en una etapa para marcar su progreso.
             </p>
-            <div class="flex flex-col md:flex-row items-center justify-between text-center gap-6">
-                <div class="flex-1">
-                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">1</div>
-                    <h3 class="font-bold text-xl mt-4">Diagnóstico</h3>
-                    <p class="text-gray-500">Análisis del proceso actual para definir la línea base.</p>
+            <div class="flex flex-col md:flex-row items-center justify-between text-center gap-1">
+                <div class="flex-1 cursor-pointer transition-all duration-300 transform hover:scale-105" data-stage="1">
+                    <div class="bg-blue-100 text-blue-800 rounded-full step-circle flex items-center justify-center mx-auto text-xl font-bold shadow-inner">1</div>
+                    <h3 class="font-bold text-xs md:text-sm mt-0.5">Diagnóstico</h3>
                 </div>
-                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
-                <div class="flex-1">
-                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">2</div>
-                    <h3 class="font-bold text-xl mt-4">Prototipo</h3>
-                    <p class="text-gray-500">Pruebas en condiciones reales con el nuevo sistema.</p>
+                <div class="text-blue-300 text-xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1 cursor-pointer transition-all duration-300 transform hover:scale-105" data-stage="2">
+                    <div class="bg-blue-100 text-blue-800 rounded-full step-circle flex items-center justify-center mx-auto text-xl font-bold shadow-inner">2</div>
+                    <h3 class="font-bold text-xs md:text-sm mt-0.5">Prototipo</h3>
                 </div>
-                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
-                <div class="flex-1">
-                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">3</div>
-                    <h3 class="font-bold text-xl mt-4">Comparación</h3>
-                    <p class="text-gray-500">Evaluación del sistema digital vs. el método manual.</p>
+                <div class="text-blue-300 text-xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1 cursor-pointer transition-all duration-300 transform hover:scale-105" data-stage="3">
+                    <div class="bg-blue-100 text-blue-800 rounded-full step-circle flex items-center justify-center mx-auto text-xl font-bold shadow-inner">3</div>
+                    <h3 class="font-bold text-xs md:text-sm mt-0.5">Comparación</h3>
                 </div>
-                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
-                <div class="flex-1">
-                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">4</div>
-                    <h3 class="font-bold text-xl mt-4">Resultados</h3>
-                    <p class="text-gray-500">Análisis de datos para validar el impacto de la innovación.</p>
+                <div class="text-blue-300 text-xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1 cursor-pointer transition-all duration-300 transform hover:scale-105" data-stage="4">
+                    <div class="bg-blue-100 text-blue-800 rounded-full step-circle flex items-center justify-center mx-auto text-xl font-bold shadow-inner">4</div>
+                    <h3 class="font-bold text-xs md:text-sm mt-0.5">Resultados</h3>
                 </div>
             </div>
         </section>
 
-        <section id="resultados" class="text-center mb-20">
-            <h2 class="title-font text-5xl md:text-6xl mb-4 text-blue-800">RADIOGRAFÍA DE LA PERFORACIÓN: 80 POZOS BAJO LA LUPA</h2>
-            <p class="max-w-4xl mx-auto text-lg text-gray-600 mb-12">
-                Los datos de la prueba piloto son reveladores. Al medir 80 pozos y compararlos con su diseño, se evidencia que menos de la mitad cumplen con los parámetros óptimos, destacando una clara oportunidad de mejora a través de la digitalización.
+        <section id="resultados" class="text-center mb-2 md:mb-0">
+            <h2 class="title-font text-3xl md:text-4xl mb-1 text-blue-800">ANÁLISIS DE 80 POZOS: ESTADO ACTUAL</h2>
+            <p class="max-w-4xl mx-auto text-sm text-gray-600 mb-2 md:mb-1">
+                Medición revela que solo el 45% de los pozos son óptimos. Oportunidad de mejora clara.
             </p>
-            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg">
+            <div class="bg-white p-2 md:p-3 rounded-lg shadow-md">
                 <div class="chart-container">
                     <canvas id="wellResultsChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <section id="foda" class="mb-16">
-            <h2 class="title-font text-5xl md:text-6xl text-center mb-12 text-blue-800">ANÁLISIS ESTRATÉGICO (FODA)</h2>
-             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-green-500">
-                    <h3 class="text-3xl font-bold mb-4">Fortalezas</h3>
-                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
-                        <li>Mejora radical en la precisión y reducción de tiempos.</li>
-                        <li>Uso de protocolos estandarizados que garantizan calidad y trazabilidad de los datos.</li>
+        <section id="foda" class="mb-0">
+            <h2 class="title-font text-3xl md:text-4xl text-center mb-2 text-blue-800">ANÁLISIS ESTRATÉGICO (FODA)</h2>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                <div class="bg-white p-2 rounded-md shadow-sm border-l border-green-500">
+                    <h3 class="text-sm font-bold mb-0.5">✅ Fortalezas</h3>
+                    <ul class="list-disc list-inside text-xs text-gray-700">
+                        <li>Precisión, reducción de tiempos.</li>
+                        <li>Protocolos estandarizados.</li>
                     </ul>
                 </div>
-                 <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-blue-500">
-                    <h3 class="text-3xl font-bold mb-4">Oportunidades</h3>
-                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
-                        <li>Disminución significativa de costos operativos y exposición a riesgos laborales.</li>
-                        <li>Alto potencial para replicar la innovación en otras faenas y estandarizar la operación.</li>
+                 <div class="bg-white p-2 rounded-md shadow-sm border-l border-blue-500">
+                    <h3 class="text-sm font-bold mb-0.5">💡 Oportunidades</h3>
+                    <ul class="list-disc list-inside text-xs text-gray-700">
+                        <li>Menos costos y riesgos.</li>
+                        <li>Potencial de replicación.</li>
                     </ul>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-yellow-500">
-                    <h3 class="text-3xl font-bold mb-4">Debilidades</h3>
-                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
-                        <li>Posible resistencia inicial del personal al cambio y a las nuevas tecnologías.</li>
-                        <li>Requerimiento de capacitación específica y ajustes técnicos durante la implementación.</li>
+                <div class="bg-white p-2 rounded-md shadow-sm border-l border-yellow-500">
+                    <h3 class="text-sm font-bold mb-0.5">⚠️ Debilidades</h3>
+                    <ul class="list-disc list-inside text-xs text-gray-700">
+                        <li>Resistencia al cambio.</li>
+                        <li>Capacitación necesaria.</li>
                     </ul>
                 </div>
-                 <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-red-500">
-                    <h3 class="text-3xl font-bold mb-4">Amenazas</h3>
-                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
-                        <li>Riesgo de fallas técnicas del equipo en condiciones ambientales adversas.</li>
-                        <li>Posible interferencia con las operaciones existentes durante la fase de despliegue.</li>
+                 <div class="bg-white p-2 rounded-md shadow-sm border-l border-red-500">
+                    <h3 class="text-sm font-bold mb-0.5">⚡ Amenazas</h3>
+                    <ul class="list-disc list-inside text-xs text-gray-700">
+                        <li>Fallas técnicas.</li>
+                        <li>Interferencia, competencia.</li>
                     </ul>
                 </div>
             </div>
         </section>
     </main>
     
-    <footer class="bg-blue-900 text-white mt-12 py-6">
-        <div class="container mx-auto px-6 text-center">
-             <p>Este informe interactivo se basa en el marco metodológico para la optimización del chequeo de pozos en Mina El Pleito.</p>
+    <footer class="bg-blue-900 text-white py-1 mt-auto">
+        <div class="container mx-auto px-4 text-center text-xs">
+             <p>Póster interactivo de investigación.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const chartData = {
-                labels: ['Pozos Óptimos', 'Pozos con Desviación', ['Pozos con Sobre', 'Perforación'], 'Pozos con Agua'],
+                labels: ['Óptimos (45%)', 'Desviación (26%)', ['Sobre Perforación', '(17%)'], 'Agua (12%)'],
                 datasets: [{
                     label: '% del Total de Pozos',
                     data: [45, 26, 17, 12],
@@ -175,8 +225,8 @@
                         '#CB4335',
                         '#2E86C1'
                     ],
-                    borderWidth: 2,
-                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderRadius: 3,
                     borderSkipped: false,
                 }]
             };
@@ -191,10 +241,10 @@
                     tooltip: {
                         enabled: true,
                         backgroundColor: '#1C2833',
-                        titleFont: { size: 16, weight: 'bold' },
-                        bodyFont: { size: 14 },
-                        padding: 12,
-                        cornerRadius: 8,
+                        titleFont: { size: 12, weight: 'bold' },
+                        bodyFont: { size: 10 },
+                        padding: 8,
+                        cornerRadius: 4,
                         callbacks: {
                             title: function(tooltipItems) {
                                 const item = tooltipItems[0];
@@ -210,33 +260,37 @@
                                 if (label) {
                                     label += ': ';
                                 }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y + '%';
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x + '%';
                                 }
                                 return label;
                             }
                         }
                     }
                 },
+                indexAxis: 'y',
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
                             font: {
-                                size: 14,
+                                size: 8,
                                 weight: 'bold'
                             }
+                        },
+                        grid: {
+                            display: false
                         }
                     },
                     x: {
                        ticks: {
                             font: {
-                                size: 14,
+                                size: 8,
                                 weight: 'bold'
                             }
                         },
                          grid: {
-                            display: false
+                            color: 'rgba(200, 200, 200, 0.2)'
                         }
                     }
                 }
@@ -247,6 +301,28 @@
                 type: 'bar',
                 data: chartData,
                 options: chartOptions
+            });
+
+            const stages = document.querySelectorAll('[data-stage]');
+            let completedStages = new Set(); // To keep track of completed stages
+
+            stages.forEach(stageDiv => {
+                stageDiv.addEventListener('click', () => {
+                    const stageNumber = stageDiv.dataset.stage;
+                    const circle = stageDiv.querySelector('.step-circle');
+
+                    if (completedStages.has(stageNumber)) {
+                        // Mark as incomplete
+                        completedStages.delete(stageNumber);
+                        circle.classList.remove('bg-green-500', 'text-white');
+                        circle.classList.add('bg-blue-100', 'text-blue-800');
+                    } else {
+                        // Mark as complete
+                        completedStages.add(stageNumber);
+                        circle.classList.remove('bg-blue-100', 'text-blue-800');
+                        circle.classList.add('bg-green-500', 'text-white');
+                    }
+                });
             });
         });
     </script>
