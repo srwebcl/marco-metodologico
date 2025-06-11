@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva: Análisis de Chequeo de Pozos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Teko:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: La infografía se estructura como una narrativa visual descendente. Comienza con un gancho que presenta el problema (la ineficiencia del método manual), avanza hacia la solución (el marco metodológico), presenta la evidencia clave (los resultados del análisis de pozos) y concluye con el panorama estratégico (FODA). Esta estructura de "problema-solución-evidencia" es más atractiva y fácil de seguir para el usuario que un simple volcado de las secciones del informe original. -->
+    <!-- Visualization & Content Choices: 1. Problema: Tarjetas de íconos con estadísticas clave para un impacto inmediato (Objetivo: Informar, Método: HTML/CSS con Unicode, Justificación: Comunica los puntos de dolor rápidamente). 2. Metodología: Diagrama de flujo horizontal simple (Objetivo: Organizar, Método: Flexbox de Tailwind, Justificación: Muestra el proceso secuencial de forma clara sin la complejidad de un gráfico formal). 3. Resultados de Pozos: Gráfico de barras de Chart.js (Objetivo: Comparar, Método: Canvas vía Chart.js, Justificación: Es la mejor forma de comparar las proporciones de las diferentes categorías de pozos; se ha añadido interactividad para la exploración). 4. FODA: Rejilla 2x2 (Objetivo: Organizar, Método: Grid de Tailwind, Justificación: Formato estándar y reconocible para el análisis estratégico). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F0F4F8;
+        }
+        .title-font {
+            font-family: 'Teko', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 300px;
+            margin: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+                max-height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="title-font text-4xl md:text-5xl text-center text-blue-900 tracking-wider">REVOLUCIONANDO LA MINERÍA: ANÁLISIS DIGITAL DE POZOS</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="problematica" class="text-center mb-20">
+            <h2 class="title-font text-5xl md:text-6xl mb-4 text-blue-800">EL DESAFÍO DEL MÉTODO TRADICIONAL</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-600 mb-12">
+                En faenas como Mina El Pleito, el chequeo manual de pozos presenta limitaciones críticas que generan sobrecostos, retrasos y, lo más importante, riesgos de seguridad. La falta de datos precisos y en tiempo real es el principal cuello de botella para la optimización del proceso de tronadura.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-orange-500">
+                    <div class="text-6xl mb-4">⏱️</div>
+                    <h3 class="text-2xl font-bold mb-2">Tiempos Elevados</h3>
+                    <p class="text-gray-600">Procesos lentos que retrasan toda la cadena productiva.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-red-500">
+                    <div class="text-6xl mb-4">📉</div>
+                    <h3 class="text-2xl font-bold mb-2">Baja Precisión</h3>
+                    <p class="text-gray-600">Datos poco fiables que llevan a desviaciones y tronaduras ineficientes.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md border-b-4 border-yellow-500">
+                     <div class="text-6xl mb-4">⚠️</div>
+                    <h3 class="text-2xl font-bold mb-2">Alta Exposición al Riesgo</h3>
+                    <p class="text-gray-600">Personal expuesto a condiciones inseguras de forma innecesaria.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="metodologia" class="bg-white rounded-xl shadow-lg p-12 mb-20">
+            <h2 class="title-font text-5xl md:text-6xl text-center mb-4 text-blue-800">VALIDACIÓN DE LA INNOVACIÓN EN TERRENO</h2>
+            <p class="max-w-4xl mx-auto text-lg text-center text-gray-600 mb-12">
+                Para garantizar la efectividad de la nueva tecnología, se diseñó un riguroso proceso de validación en 4 etapas, combinando mediciones cuantitativas con evaluaciones cualitativas para asegurar no solo la superioridad técnica, sino también su viabilidad y aceptación por parte del personal.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-between text-center gap-6">
+                <div class="flex-1">
+                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">1</div>
+                    <h3 class="font-bold text-xl mt-4">Diagnóstico</h3>
+                    <p class="text-gray-500">Análisis del proceso actual para definir la línea base.</p>
+                </div>
+                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1">
+                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">2</div>
+                    <h3 class="font-bold text-xl mt-4">Prototipo</h3>
+                    <p class="text-gray-500">Pruebas en condiciones reales con el nuevo sistema.</p>
+                </div>
+                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1">
+                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">3</div>
+                    <h3 class="font-bold text-xl mt-4">Comparación</h3>
+                    <p class="text-gray-500">Evaluación del sistema digital vs. el método manual.</p>
+                </div>
+                <div class="text-blue-300 text-4xl font-thin hidden md:block">&rarr;</div>
+                <div class="flex-1">
+                    <div class="bg-blue-100 text-blue-800 rounded-full w-20 h-20 flex items-center justify-center mx-auto text-4xl font-bold shadow-inner">4</div>
+                    <h3 class="font-bold text-xl mt-4">Resultados</h3>
+                    <p class="text-gray-500">Análisis de datos para validar el impacto de la innovación.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="resultados" class="text-center mb-20">
+            <h2 class="title-font text-5xl md:text-6xl mb-4 text-blue-800">RADIOGRAFÍA DE LA PERFORACIÓN: 80 POZOS BAJO LA LUPA</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-600 mb-12">
+                Los datos de la prueba piloto son reveladores. Al medir 80 pozos y compararlos con su diseño, se evidencia que menos de la mitad cumplen con los parámetros óptimos, destacando una clara oportunidad de mejora a través de la digitalización.
+            </p>
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg">
+                <div class="chart-container">
+                    <canvas id="wellResultsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="foda" class="mb-16">
+            <h2 class="title-font text-5xl md:text-6xl text-center mb-12 text-blue-800">ANÁLISIS ESTRATÉGICO (FODA)</h2>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-green-500">
+                    <h3 class="text-3xl font-bold mb-4">Fortalezas</h3>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Mejora radical en la precisión y reducción de tiempos.</li>
+                        <li>Uso de protocolos estandarizados que garantizan calidad y trazabilidad de los datos.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-blue-500">
+                    <h3 class="text-3xl font-bold mb-4">Oportunidades</h3>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Disminución significativa de costos operativos y exposición a riesgos laborales.</li>
+                        <li>Alto potencial para replicar la innovación en otras faenas y estandarizar la operación.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-yellow-500">
+                    <h3 class="text-3xl font-bold mb-4">Debilidades</h3>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Posible resistencia inicial del personal al cambio y a las nuevas tecnologías.</li>
+                        <li>Requerimiento de capacitación específica y ajustes técnicos durante la implementación.</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-8 rounded-xl shadow-md border-l-8 border-red-500">
+                    <h3 class="text-3xl font-bold mb-4">Amenazas</h3>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Riesgo de fallas técnicas del equipo en condiciones ambientales adversas.</li>
+                        <li>Posible interferencia con las operaciones existentes durante la fase de despliegue.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-blue-900 text-white mt-12 py-6">
+        <div class="container mx-auto px-6 text-center">
+             <p>Este informe interactivo se basa en el marco metodológico para la optimización del chequeo de pozos en Mina El Pleito.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartData = {
+                labels: ['Pozos Óptimos', 'Pozos con Desviación', ['Pozos con Sobre', 'Perforación'], 'Pozos con Agua'],
+                datasets: [{
+                    label: '% del Total de Pozos',
+                    data: [45, 26, 17, 12],
+                    backgroundColor: [
+                        '#2ECC71',
+                        '#F39C12',
+                        '#E74C3C',
+                        '#3498DB'
+                    ],
+                    borderColor: [
+                        '#28B463',
+                        '#D68910',
+                        '#CB4335',
+                        '#2E86C1'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                }]
+            };
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#1C2833',
+                        titleFont: { size: 16, weight: 'bold' },
+                        bodyFont: { size: 14 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            },
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    x: {
+                       ticks: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                         grid: {
+                            display: false
+                        }
+                    }
+                }
+            };
+
+            const ctx = document.getElementById('wellResultsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        });
+    </script>
+</body>
+</html>
