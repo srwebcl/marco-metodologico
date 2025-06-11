@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Interactivo: Análisis de Pozos Mineros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutral Tones -->
+    <!-- Application Structure Plan: Se ha diseñado una estructura narrativa y descendente para guiar al usuario de forma lógica. Comienza con el problema (La Problemática), sigue con la solución propuesta (Marco Metodológico), presenta los datos clave (Hallazgos del Análisis), y finaliza con el contexto estratégico (Análisis FODA) y normativo. Esta estructura lineal facilita la comprensión de la historia completa, desde el desafío hasta la solución y sus implicaciones, siendo más intuitiva que un panel de control para este tipo de informe. -->
+    <!-- Visualization & Content Choices: 1. Diagrama de Flujo Metodológico: (Info: Etapas del proyecto | Objetivo: Organizar | Método: Cajas con Flexbox en HTML/CSS | Interacción: Sutil resaltado al pasar el cursor | Justificación: Visualiza el proceso secuencial de forma más clara que una lista). 2. Gráfico de Barras de Tipos de Pozos: (Info: Distribución porcentual de 80 pozos | Objetivo: Comparar/Informar | Método: Gráfico de barras de Chart.js | Interacción: Al pasar el cursor sobre una barra, se resalta y se muestra una descripción detallada en una tarjeta de texto separada | Justificación: Conecta la visualización de datos directamente con su explicación contextual, mejorando la retención). 3. Cuadrantes FODA: (Info: Fortalezas, Oportunidades, etc. | Objetivo: Organizar | Método: Rejilla (Grid) de Tailwind CSS | Interacción: Ninguna, estático | Justificación: Presenta el análisis estratégico en un formato estándar y fácilmente digerible). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-button {
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">Análisis de Chequeo de Pozos</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#problematica" class="nav-button text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">Problemática</a>
+                <a href="#metodologia" class="nav-button text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">Metodología</a>
+                <a href="#hallazgos" class="nav-button text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">Hallazgos</a>
+                <a href="#foda" class="nav-button text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">FODA</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="problematica" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">La Problemática del Chequeo Manual</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                El método tradicional para el chequeo de pozos en minería a cielo abierto presenta limitaciones operativas críticas. Este proceso manual es lento, impreciso y expone al personal a riesgos innecesarios, afectando directamente la seguridad y la eficiencia de la tronadura.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="card p-6">
+                    <div class="text-4xl mb-4">⏱️</div>
+                    <h3 class="text-xl font-semibold mb-2">Altos Tiempos de Ejecución</h3>
+                    <p class="text-gray-600">El proceso manual es inherentemente lento, generando cuellos de botella y retrasos en la operación.</p>
+                </div>
+                <div class="card p-6">
+                    <div class="text-4xl mb-4">📉</div>
+                    <h3 class="text-xl font-semibold mb-2">Baja Precisión y Trazabilidad</h3>
+                    <p class="text-gray-600">La falta de datos precisos y un registro deficiente dificultan el control de calidad y la toma de decisiones.</p>
+                </div>
+                <div class="card p-6">
+                     <div class="text-4xl mb-4">⚠️</div>
+                    <h3 class="text-xl font-semibold mb-2">Alta Exposición al Riesgo</h3>
+                    <p class="text-gray-600">El personal se expone a condiciones inseguras como caídas de rocas o inestabilidad del terreno.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="metodologia" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Un Enfoque Metodológico para la Innovación</h2>
+             <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                Para validar una nueva solución tecnológica, se ha diseñado un riguroso marco metodológico de cuatro etapas. Este enfoque mixto, que combina análisis cuantitativo y cualitativo, asegura que la tecnología no solo sea técnicamente superior, sino también viable y aceptada operacionalmente.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-0">
+                <div class="card p-4 w-full md:w-1/4 text-center">
+                    <span class="text-blue-600 font-bold text-lg">ETAPA 1</span>
+                    <h3 class="font-semibold mt-2">Diagnóstico</h3>
+                    <p class="text-sm text-gray-500">Análisis del proceso actual para establecer una línea base.</p>
+                </div>
+                <div class="text-2xl font-bold text-gray-400 mx-4 transform rotate-90 md:rotate-0">&rarr;</div>
+                <div class="card p-4 w-full md:w-1/4 text-center">
+                     <span class="text-blue-600 font-bold text-lg">ETAPA 2</span>
+                    <h3 class="font-semibold mt-2">Diseño y Prototipo</h3>
+                    <p class="text-sm text-gray-500">Implementación de la nueva tecnología en condiciones reales.</p>
+                </div>
+                 <div class="text-2xl font-bold text-gray-400 mx-4 transform rotate-90 md:rotate-0">&rarr;</div>
+                <div class="card p-4 w-full md:w-1/4 text-center">
+                     <span class="text-blue-600 font-bold text-lg">ETAPA 3</span>
+                    <h3 class="font-semibold mt-2">Comparación</h3>
+                    <p class="text-sm text-gray-500">Evaluación del método nuevo vs. el tradicional.</p>
+                </div>
+                 <div class="text-2xl font-bold text-gray-400 mx-4 transform rotate-90 md:rotate-0">&rarr;</div>
+                <div class="card p-4 w-full md:w-1/4 text-center">
+                     <span class="text-blue-600 font-bold text-lg">ETAPA 4</span>
+                    <h3 class="font-semibold mt-2">Evaluación</h3>
+                    <p class="text-sm text-gray-500">Análisis de resultados y validación de datos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hallazgos" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Hallazgos del Análisis de Pozos</h2>
+            <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                Se realizó una medición sobre un total de 80 pozos para compararlos con su diseño teórico. Los resultados revelan desviaciones significativas que impactan la operación y demuestran la necesidad de una mayor precisión, que la nueva tecnología puede ofrecer. Pase el cursor sobre las barras para ver el detalle.
+            </p>
+            <div class="flex flex-col lg:flex-row gap-8 items-center">
+                <div class="w-full lg:w-2/3">
+                    <div class="chart-container">
+                        <canvas id="pozosChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/3">
+                    <div id="chart-info" class="card p-6 min-h-[180px] flex flex-col justify-center">
+                        <h3 id="info-title" class="text-2xl font-bold text-blue-700 mb-2">Resultados Generales</h3>
+                        <p id="info-text" class="text-gray-700">El análisis muestra que menos de la mitad de los pozos se encuentran en condiciones óptimas según su diseño.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="foda" class="scroll-mt-20">
+             <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Análisis Estratégico (FODA)</h2>
+             <p class="max-w-3xl mx-auto text-center text-gray-600 mb-12">
+                La implementación de esta innovación tecnológica presenta un panorama claro de factores internos y externos que deben ser considerados para asegurar su éxito y maximizar su impacto positivo en la faena.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><span class="text-2xl text-green-500">✓</span>Fortalezas</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Mejora en precisión y reducción de tiempos.</li>
+                        <li>Protocolos estandarizados que garantizan calidad y trazabilidad.</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><span class="text-2xl text-blue-500">💡</span>Oportunidades</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Disminución de costos operativos y exposición a riesgos laborales.</li>
+                        <li>Potencial para replicar la innovación en otras faenas mineras.</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><span class="text-2xl text-yellow-500">⚠️</span>Debilidades</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Posible resistencia del personal a nuevas tecnologías.</li>
+                        <li>Requerimiento de capacitación y ajustes técnicos iniciales.</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><span class="text-2xl text-red-500">⚡</span>Amenazas</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Posibles fallas técnicas y condiciones ambientales adversas.</li>
+                        <li>Interferencia con operaciones y competencia de soluciones existentes.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-500">
+            <p>&copy; 2025 Informe Interactivo de Minería. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartData = {
+                labels: ['Pozos Óptimos', 'Pozos con Desviación', 'Pozo con Sobre Perforación', 'Pozos con Agua'],
+                datasets: [{
+                    label: '% de Pozos',
+                    data: [45, 26, 17, 12],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(249, 115, 22, 0.7)',
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(14, 165, 233, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(249, 115, 22, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(14, 165, 233, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const infoContent = [
+                { title: 'Pozos Óptimos (45%)', text: 'Solo el 45% de los pozos analizados coincidían con el rango de diseño permitido de 1 metro, considerándose en condiciones ideales.' },
+                { title: 'Pozos con Desviación (26%)', text: 'Un 26% de los pozos presentaron un desplazamiento significativo en su inclinación, lo que puede afectar la fragmentación de la roca.' },
+                { title: 'Sobreperforación (17%)', text: 'El 17% de los pozos estaba con sobreperforación. Esto llevó al área técnica a solicitar un acotamiento general de la malla de perforación.' },
+                { title: 'Pozos con Agua (12%)', text: 'Se detectó la presencia de agua en un 12% de los pozos, un factor que complica la carga de explosivos y afecta el resultado de la tronadura.' }
+            ];
+
+            const defaultInfo = {
+                title: 'Resultados Generales',
+                text: 'El análisis muestra que menos de la mitad de los pozos se encuentran en condiciones óptimas según su diseño. Pase el cursor sobre las barras para ver el detalle.'
+            };
+            
+            const infoTitleEl = document.getElementById('info-title');
+            const infoTextEl = document.getElementById('info-text');
+
+            const ctx = document.getElementById('pozosChart').getContext('2d');
+            const pozosChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Porcentaje (%)'
+                            }
+                        }
+                    },
+                    onHover: (event, chartElement) => {
+                        if (chartElement.length > 0) {
+                            const index = chartElement[0].index;
+                            infoTitleEl.textContent = infoContent[index].title;
+                            infoTextEl.textContent = infoContent[index].text;
+                            
+                            event.native.target.style.cursor = 'pointer';
+
+                            pozosChart.data.datasets[0].borderWidth = pozosChart.data.datasets[0].data.map((_, i) => i === index ? 3 : 1);
+                            pozosChart.update();
+
+                        } else {
+                            infoTitleEl.textContent = defaultInfo.title;
+                            infoTextEl.textContent = defaultInfo.text;
+                             event.native.target.style.cursor = 'default';
+                             pozosChart.data.datasets[0].borderWidth = 1;
+                             pozosChart.update();
+                        }
+                    }
+                }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
